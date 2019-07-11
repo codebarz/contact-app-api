@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getContacts, getSingleContact } from '../controllers';
+import { getContacts, getSingleContact, deleteContact } from '../controllers';
 
 const router = Router();
 
@@ -17,6 +17,16 @@ router.get('/contacts', function(_req, res) {
 router.get('/contacts/:contactName', function(req, res) {
   try {
     const data = getSingleContact(req.params.contactName);
+
+    res.status(200).json({ data });
+  } catch {
+    res.status(404).json({ error: 'Contact not found' });
+  }
+});
+
+router.delete('/contacts/:contactName', function(req, res) {
+  try {
+    const data = deleteContact(req.params.contactName);
 
     res.status(200).json({ data });
   } catch {
