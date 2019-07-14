@@ -53,7 +53,7 @@ export function deleteContact(id: string) {
 
   const newContact = JSON.stringify(contacts);
 
-  fs.writeFile('contacts.json', newContact, 'utf-8', (err: any) => {
+  fs.writeFile('data/contacts.json', newContact, 'utf-8', (err: any) => {
     if (err) {
       console.log(err);
     }
