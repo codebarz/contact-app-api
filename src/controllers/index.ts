@@ -18,8 +18,30 @@ export function getSingleContact(name: string) {
   return contact;
 }
 
-export function deleteContact(name: string) {
-  const contact = getSingleContact(name);
+export function addContact(details: IDetails) {
+  let id = uuidv4();
+  const newContact = details;
+  newContact.id = id;
+
+  let addedToExisting = false;
+  contacts.forEach((contact: any) => {
+    if (contact.fullName === newContact.fullName) {
+      contact.phone = [contact.phone];
+      contact.phone.push(newContact.phone);
+      addedToExisting = true;
+      return;
+    }
+  });
+
+  if (!addedToExisting) {
+    contacts.push(newContact);
+  }
+
+  return newContact;
+}
+
+export function deleteContact(id: string) {
+  const contact = getSingleContact(id);
 
   if (contact.length > 1) {
     throw new Error(
