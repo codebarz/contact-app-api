@@ -1,6 +1,15 @@
 const contacts = require('../../data/contacts.json');
 const fs = require('fs');
 
+interface IDetails {
+  id?: string;
+  fullName: string;
+  phone: string;
+  email: string;
+  company: string;
+  isBlocked: boolean;
+}
+
 export function getContacts() {
   return contacts;
 }
