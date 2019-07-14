@@ -1,5 +1,6 @@
 const contacts = require('../../data/contacts.json');
 const fs = require('fs');
+import { uuidv4 } from '../Helpers';
 
 interface IDetails {
   id?: string;
