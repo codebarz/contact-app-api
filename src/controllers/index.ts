@@ -59,5 +59,6 @@ export function deleteContact(id: string) {
     }
     return true;
   });
+
   return contacts;
 }
