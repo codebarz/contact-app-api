@@ -30,8 +30,7 @@ export function getSingleContact(name: string) {
 
 export function addContact(details: IDetails) {
   let id = uuidv4();
-  const newContact = details;
-  newContact.id = id;
+  details.id = id;
 
   let addedToExisting = false;
   contacts.forEach((contact: any) => {
