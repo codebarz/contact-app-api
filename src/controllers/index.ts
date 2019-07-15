@@ -43,8 +43,34 @@ export function addContact(details: IDetails) {
   });
 
   if (!addedToExisting) {
-    contacts.push(newContact);
+    contacts.push(details);
   }
+
+  const newList = JSON.stringify(contacts);
+
+  fs.writeFile('data/contacts.json', newList, 'utf-8', function(err: any) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  return details;
+}
+
+export function blockContact(id: string) {
+  let contact = getSingleContact(id);
+
+  if (!contact.length) {
+    throw new Error('Contact not found');
+  }
+  contact[0].isBlocked = true;
+
+  const newList = JSON.stringify(contacts);
+
+  fs.writeFile('data/contacts.json', newList, 'utf-8', (err: any) => {
+    if (err) {
+      console.log(err);
+    }
 
   return newContact;
 }
