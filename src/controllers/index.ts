@@ -78,10 +78,8 @@ export function blockContact(id: string) {
 export function deleteContact(id: string) {
   const contact = getSingleContact(id);
 
-  if (contact.length > 1) {
-    throw new Error(
-      'There are more than one contact with this name. Kindly enter specific name'
-    );
+  if (!contact.length) {
+    throw new Error('There is no contact with this id');
   }
 
   contacts.splice(contact[0].id - 1, 1);
