@@ -1,5 +1,13 @@
 import { Router } from 'express';
-import { getContacts, getSingleContact, deleteContact } from '../controllers';
+import {
+  getContacts,
+  getSingleContact,
+  deleteContact,
+  addContact,
+  blockContact,
+  getBlocked,
+  editContact
+} from '../controllers';
 
 const router = Router();
 
@@ -14,23 +22,59 @@ router.get('/contacts', function(_req, res) {
   res.status(200).json({ data: contacts });
 });
 
-router.get('/contacts/:contactName', function(req, res) {
+router.get('/contacts/blocked', function(_req, res) {
   try {
-    const data = getSingleContact(req.params.contactName);
-
+    const data = getBlocked();
     res.status(200).json({ data });
   } catch {
-    res.status(404).json({ error: 'Contact not found' });
+    res.status(404).json({ error: 'No blocked contacts' });
   }
 });
 
-router.delete('/contacts/:contactName', function(req, res) {
+router.put('/contacts/:contactID', (req, res) => {
   try {
-    const data = deleteContact(req.params.contactName);
+    const data = editContact(req.body);
+    res.status(200).json({ data });
+  } catch {
+    res.status(404).json({ error: 'There is no contact with this id to edit' });
+  }
+});
+
+router.put('/contacts/block/:contactID', function(req, res) {
+  try {
+    const data = blockContact(req.params.contactID);
+    res.status(200).json({ data });
+  } catch {
+    res.status(404).json({ error: 'conctact not found to block' });
+  }
+});
+
+router.get('/contacts/:contactID', function(req, res) {
+  try {
+    const data = getSingleContact(req.params.contactID);
 
     res.status(200).json({ data });
   } catch {
-    res.status(404).json({ error: 'Contact not found' });
+    res.status(404).json({ error: 'Contact not found to show' });
+  }
+});
+
+router.post('/contacts', function(req, res) {
+  try {
+    const newContact = addContact(req.body);
+    res.status(200).json({ data: newContact });
+  } catch {
+    res.status(400).json({ error: 'An error occured!. Please try again' });
+  }
+});
+
+router.delete('/contacts/:contactID', function(req, res) {
+  try {
+    const data = deleteContact(req.params.contactID);
+
+    res.status(200).json({ data });
+  } catch {
+    res.status(404).json({ error: 'Contact not found to delete' });
   }
 });
 

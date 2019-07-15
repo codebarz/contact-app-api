@@ -12,19 +12,17 @@ interface IDetails {
 }
 
 export function getContacts() {
-  return contacts;
+  const realContacts = contacts.filter((contact: any) => !contact.isBlocked);
+  return realContacts;
 }
 
-export function getSingleContact(name: string) {
-  const pattern = new RegExp(name, 'gi');
-
-  const contact = contacts.filter(
-    (contact: any) => pattern.test(contact.full_name) === true
-  );
+export function getSingleContact(contactID: string) {
+  const contact = contacts.filter((contact: any) => contact.id === contactID);
 
   if (!contact.length) {
     throw new Error('Contact not found');
   }
+
   return contact;
 }
 
@@ -34,9 +32,9 @@ export function addContact(details: IDetails) {
 
   let addedToExisting = false;
   contacts.forEach((contact: any) => {
-    if (contact.fullName === newContact.fullName) {
+    if (contact.fullName === details.fullName) {
       contact.phone = [contact.phone];
-      contact.phone.push(newContact.phone);
+      contact.phone.push(details.phone);
       addedToExisting = true;
       return;
     }
@@ -57,13 +55,23 @@ export function addContact(details: IDetails) {
   return details;
 }
 
+export function getBlocked() {
+  const blocked = contacts.filter((contact: any) => contact.isBlocked);
+
+  if (!blocked.length) {
+    throw new Error('No blocked contact');
+  }
+
+  return blocked;
+}
+
 export function blockContact(id: string) {
   let contact = getSingleContact(id);
 
   if (!contact.length) {
     throw new Error('Contact not found');
   }
-  contact[0].isBlocked = true;
+  contact[0].isBlocked = !contact[0].isBlocked;
 
   const newList = JSON.stringify(contacts);
 
@@ -71,8 +79,32 @@ export function blockContact(id: string) {
     if (err) {
       console.log(err);
     }
+  });
 
-  return newContact;
+  return contact;
+}
+
+export function editContact({ id, fullName, phone, email, company }: any) {
+  let contact = getSingleContact(id);
+
+  if (!contact.length) {
+    throw new Error('There is no contact with this id');
+  }
+
+  fullName ? (contact[0].fullName = fullName) : contact[0].fillName;
+  phone ? (contact[0].phone = phone) : contact[0].phone;
+  email ? (contact[0].email = email) : contact[0].email;
+  company ? (contact[0].company = company) : contact[0].company;
+
+  const newList = JSON.stringify(contacts);
+
+  fs.writeFile('data/contacts.json', newList, 'utf-8', (err: any) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  return contact;
 }
 
 export function deleteContact(id: string) {
@@ -90,7 +122,6 @@ export function deleteContact(id: string) {
     if (err) {
       console.log(err);
     }
-    return true;
   });
 
   return contacts;
