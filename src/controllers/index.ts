@@ -40,6 +40,7 @@ export function addContact(details: IDetails) {
         contact.phone = [contact.phone];
       } else {
         contact.phone = [...contact.phone];
+      }
       contact.phone.push(details.phone);
       addedToExisting = true;
       return;
