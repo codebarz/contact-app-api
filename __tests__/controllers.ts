@@ -19,15 +19,20 @@ describe('Controllers', () => {
   });
 
   test('Should check if a single contacts can be gotten', async () => {
-    const data = await getSingleContact('2aea406b-cad5-4406-8409-81c5785b5884');
-    expect(data).toContainEqual({
-      id: expect.any(String),
-      fullName: expect.any(String),
-      phone: expect.any(String),
-      email: expect.any(String),
-      company: expect.any(String),
-      isBlocked: expect.any(Boolean)
-    });
+    try {
+      const data = await getSingleContact(
+        '2aea406b-cad5-4406-8409-81c5785b5884'
+      );
+      await getSingleContact('2aea406b-cad5-4406-8409-81c5785b');
+
+      expect(data).toContainEqual({
+        id: expect.any(String),
+        fullName: expect.any(String),
+        phone: expect.any(String),
+        email: expect.any(String),
+        company: expect.any(String),
+        isBlocked: expect.any(Boolean)
+      });
   });
 
   test('Should check if contacts can be blocked', async () => {
