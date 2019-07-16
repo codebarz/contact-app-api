@@ -45,7 +45,7 @@ describe('Controllers', () => {
     );
     const data = await blockContact('2aea406b-cad5-4406-8409-81c5785b5884');
     if (contact.isBlocked) {
-      expect(data[0].isBlocked).toBeTruthy();
+    expect(data[0].isBlocked).toBeTruthy();
   });
 
   test('Should check if contacts can be unblocked', async () => {
