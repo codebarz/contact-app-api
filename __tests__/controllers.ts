@@ -33,6 +33,9 @@ describe('Controllers', () => {
         company: expect.any(String),
         isBlocked: expect.any(Boolean)
       });
+    } catch (e) {
+      expect(e.message).toBe('Contact not found');
+    }
   });
 
   test('Should check if contacts can be blocked', async () => {
