@@ -33,7 +33,7 @@ export function addContact(details: IDetails) {
   let addedToExisting = false;
   contacts.forEach((contact: any) => {
     if (contact.fullName === details.fullName) {
-      contact.phone = [contact.phone];
+      contact.phone = [...contact.phone];
       contact.phone.push(details.phone);
       addedToExisting = true;
       return;
