@@ -32,8 +32,14 @@ export function addContact(details: IDetails) {
 
   let addedToExisting = false;
   contacts.forEach((contact: any) => {
-    if (contact.fullName === details.fullName) {
-      contact.phone = [...contact.phone];
+    if (contact.fullName.toLowerCase() === details.fullName.toLowerCase()) {
+      if (contact.phone === details.phone) {
+        throw new Error('Contact already added');
+      }
+      if (typeof contact.phone === 'string') {
+        contact.phone = [contact.phone];
+      } else {
+        contact.phone = [...contact.phone];
       contact.phone.push(details.phone);
       addedToExisting = true;
       return;
