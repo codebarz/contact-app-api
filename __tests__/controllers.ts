@@ -2,7 +2,8 @@ import {
   getContacts,
   blockContact,
   getSingleContact,
-  getBlocked
+  getBlocked,
+  addContact
 } from '../src/controllers';
 
 describe('Controllers', () => {
