@@ -40,18 +40,13 @@ describe('Controllers', () => {
   });
 
   test('Should check if contacts can be blocked', async () => {
-    const contact = await getSingleContact(
-      '2aea406b-cad5-4406-8409-81c5785b5884'
-    );
     const data = await blockContact('2aea406b-cad5-4406-8409-81c5785b5884');
-    if (contact.isBlocked) {
     expect(data[0].isBlocked).toBeTruthy();
   });
 
   test('Should check if contacts can be unblocked', async () => {
     const data = await blockContact('2aea406b-cad5-4406-8409-81c5785b5884');
     expect(data[0].isBlocked).toBeFalsy();
-    }
   });
 
   test('Should check if blocked contacts can be gotten', async () => {
