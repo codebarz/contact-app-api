@@ -80,5 +80,8 @@ describe('Controllers', () => {
         company: expect.any(String),
         isBlocked: expect.any(Boolean)
       });
+    } catch (error) {
+      expect(error.message).toBe('Contact already added');
+    }
   });
 });
