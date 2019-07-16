@@ -1,4 +1,9 @@
-import { getContacts } from '../src/controllers';
+import {
+  getContacts,
+  blockContact,
+  getSingleContact,
+  getBlocked
+} from '../src/controllers';
 
 describe('Controllers', () => {
   test('Should check if contacts can be gotten', async () => {
