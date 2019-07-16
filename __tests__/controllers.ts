@@ -55,10 +55,30 @@ describe('Controllers', () => {
     expect(data).toContainEqual({
       id: expect.any(String),
       fullName: expect.any(String),
-      phone: expect.any(Array),
+      phone: expect.any(String),
       email: expect.any(String),
       company: expect.any(String),
       isBlocked: expect.any(Boolean)
     });
+  });
+
+  test('Should check if contacts can be added', () => {
+    try {
+      const contact = {
+        fullName: 'Will Smith',
+        phone: '08157218403',
+        email: 'willsmith@gmail.com',
+        company: 'GLO',
+        isBlocked: false
+      };
+      const data = addContact(contact);
+      expect(data).toContainEqual({
+        id: expect.any(String),
+        fullName: expect.any(String),
+        phone: expect.any(String),
+        email: expect.any(String),
+        company: expect.any(String),
+        isBlocked: expect.any(Boolean)
+      });
   });
 });
