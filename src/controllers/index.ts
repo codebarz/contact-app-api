@@ -120,8 +120,12 @@ export function deleteContact(id: string) {
   if (!contact.length) {
     throw new Error('There is no contact with this id');
   }
-
-  contacts.splice(contact[0].id - 1, 1);
+  contacts.forEach((contact: any, index: any) => {
+    if (contact.id === contact[0].id) {
+      contacts.splice(index, 1);
+      return;
+    }
+  });
 
   const newContact = JSON.stringify(contacts);
 
@@ -131,5 +135,5 @@ export function deleteContact(id: string) {
     }
   });
 
-  return contacts;
+  return 'Contact deleted';
 }

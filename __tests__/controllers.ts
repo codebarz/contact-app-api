@@ -83,4 +83,6 @@ describe('Controllers', () => {
       expect(error.message).toBe('Contact already added');
     }
   });
+
+  test('Should check if data can be deleted', async () => {});
 });
